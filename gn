@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+: <<'Block_Comments'
+如何gnome输出或显示所有schema？
+https://www.google.com/search?biw=1920&bih=846&q=gnome+gsettings+schema+path+key https://askubuntu.com/questions/155305/where-can-i-get-a-list-of-schema-path-key-to-use-with-gsettings
+gsettings list-schemas
+Block_Comments
+
+if [ "$1" == "net" ]
+then
+	nohup gnome-control-center network &
+elif [ "$1" == "key" ]
+then
+	nohup gnome-control-center keyboard &
+else
+	nohup gnome-control-center &
+fi
+
+# nohup

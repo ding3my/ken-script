@@ -1,0 +1,137 @@
+#!/usr/bin/env bash
+
+# wmctrl -Fa 'Terminal' || gnome-terminal -e 'emacs -nw'
+
+launcher_program="emacs"
+launcher_id_file="/dev/shm/launcher_id_file"
+
+: <<'Block_Comments'
+如何 bash shell 读取文件？
+https://www.google.com/search?q=how+bash+read+file https://stackoverflow.com/questions/10929453/read-a-file-line-by-line-assigning-the-value-to-a-variable
+Block_Comments
+launcher_id="$(cat $launcher_id_file)"
+
+printf "launcher_id:%s\n" "${launcher_id}"
+
+if [ "${launcher_id}" == "" ]; then # 如果 launcher_id 不存在，则新建加载器进程。
+
+	$launcher_program &
+	launcher_pid="${!}"
+	printf "launcher_pid:%s\n" "${launcher_pid}"
+
+: <<'Block_Comments'
+如何linux获取新建窗口的窗口id？
+man wmctrl /pid
+使用pid和wmctrl -l -p
+Block_Comments
+: <<'Block_Comments'
+如何linux bash shell获取新建进程id或pid？
+https://www.google.com/search?q=how+get+pid+of+command https://unix.stackexchange.com/questions/30370/how-to-get-the-pid-of-the-last-executed-command-in-shell-script
+echo $!
+Block_Comments
+: <<'Block_Comments'
+如何bash shell分隔或拆分多空格（连续分隔符）字符串？!
+鸟哥的Linux私房菜 基础学习篇 3ed 363
+wmctrl -l -p| awk '{print $1}'
+wmctrl -l -p| awk "{print \$1}"
+Block_Comments
+: <<'Block_Comments'
+如何解决新建gui进程，wmctrl -l更新不及时或延时？
+sleep 1
+Block_Comments
+: <<'Block_Comments'
+如何awk不输出换行符？？
+Block_Comments
+	#sleep 1; wmctrl -p -l | tee | grep -P ".* ${launcher_pid} .*emacs.*" | tee | awk '{print $1}' | tee "${launcher_id_file}" # 记录加载器窗口id，用于激活，即emacs的窗口id
+	sleep 1; printf "%s" "$(wmctrl -p -l | grep -P ".* ${launcher_pid} .*emacs.*" | awk '{print $1}')" | tee "${launcher_id_file}" # 记录加载器窗口id，用于激活，即emacs的窗口id
+
+elif [ ! "${launcher_id}" == "" ]; then # 如果 launcher_id 存在，则激活该窗口id的加载器
+
+: <<'Block_Comments'
+如何解决bash shell if报错[: too many arguments？
+不使用[]，错误实例如下：
+if [ wmctrl -i -a "${launcher_id}" ]; then # 如果激活成功，则结束
+https://www.google.com/search?q=bash:+[:+too+many+arguments&ie=utf-8&oe=utf-8 https://askubuntu.com/questions/39062/bash-too-many-arguments
+The main error in your script is that the [ command, equivalent to test command, is used to test conditions, like string comparison, existence of files, and so on.
+To test the exit status of processes you have to use if without [
+Block_Comments
+: <<'Block_Comments'
+如何解决wmctrl -a失败后，返回真值？
+wmctrl -l | grep 0x2400006
+Block_Comments
+	if wmctrl -l | grep "${launcher_id}"; then # 如果加载器窗口存在，则激活或隐藏。
+
+		echo 64
+		printf "launcher_id:%s" "${launcher_id}" | od -c
+		#printf "%s" "$(xprop -root 32x '\t$0' _NET_ACTIVE_WINDOW | awk '{print $2}')" | od -c
+		cur_win_id="$(printf "%s" "$(xprop -root 32x '\t$0' _NET_ACTIVE_WINDOW | awk '{print $2}')")"
+		printf "cur_win_id:%s" "${cur_win_id}" | od -c
+
+: <<'Block_Comments'
+如何wmctrl检索当前激活窗口名字或窗口id？
+https://www.google.com/search?q=wmctrl+current+window&ie=utf-8&oe=utf-8 https://superuser.com/questions/382616/detecting-currently-active-window
+xprop -root 32x '\t$0' _NET_ACTIVE_WINDOW | cut -f 2
+xprop -root 32x '\t$0' _NET_ACTIVE_WINDOW | awk '{print $2}'
+Block_Comments
+		if [ "${launcher_id}" == "${cur_win_id}" ]; then # 如果当前窗口是加载器窗口，则隐藏。BUG！！需要驱动测试Log日志来调试，无法直观看到信息。
+: <<'Block_Comments'
+如何bash shell隐藏当前窗口？？
+https://www.google.com/search?q=how+hide+current+window+bash+shell https://askubuntu.com/questions/4876/can-i-minimize-a-window-from-the-command-line
+wmctrl -i -r "${launcher_id}" -b toggle,shaded
+Block_Comments
+			wmctrl -i -r "${launcher_id}" -b toggle,shaded
+
+		else # 如果当前窗口不是加载器窗口，则激活
+			printf "%s" "${launcher_id}"
+			wmctrl -i -a "${launcher_id}"
+		fi
+
+: <<'Block_Comments'
+如何bash shell否定命令的返回码？
+https://www.google.com/search?q=how+negative+return+code+bash https://stackoverflow.com/questions/367069/how-can-i-negate-the-return-value-of-a-process
+！
+Block_Comments
+	elif ! wmctrl -l | grep "${launcher_id}"; then # 如果加载器窗口不存在，则新建加载器进程。
+		$launcher_program &
+		launcher_pid="${!}"
+		sleep 1; wmctrl -p -l | grep -P ".* ${launcher_pid} .*emacs.*"| awk "{print \$1}" | tee "${launcher_id_file}" # 记录加载器窗口id，用于激活，即emacs的id
+	fi
+fi
+
+: <<'Block_Comments'
+如何调试bash shell脚本？
+
+如何 bash shell printf输出字符串变量？
+
+如何 bash shell子进程脚本设置全局变量？
+https://www.google.com/search?q=how+sub+process+script+bash+global+variable&ie=utf-8&oe=utf-8
+https://stackoverflow.com/questions/13207292/bash-background-process-modify-global-variable
+Bash don't have a equivalent to rexx port, so there is a little sample, using a rendez-vous file, that work (on my Linux).
+/dev/shm/foo
+https://stackoverflow.com/questions/15541321/set-a-parent-shells-variable-from-a-subshell
+a=3
+{ a=4;}
+echo $a
+
+如何 bash shell检索非交互脚本的错误输出？
+
+
+如何 bash shell执行空操作或无操作？
+: https://www.google.com/search?q=how+bash+empty+action&ie=utf-8&oe=utf-8 https://stackoverflow.com/questions/17583578/what-command-means-do-nothing-in-a-conditional-in-bash
+
+如何emacs转换字符串小写为大写？
+M-u https://www.google.com/search?q=emacs+convert+lower+capital&ie=utf-8&oe=utf-8 https://www.gnu.org/software/emacs/manual/html_node/emacs/Case.html
+M-l 小写
+
+
+如何linux shell 16进制转为10进制？
+printf '%d' 0x04a00123 http://blog.iderzheng.com/base-conversion-with-printf-in-bash/
+
+如何wmctrl检索窗口信息？
+wmctrl -l https://askubuntu.com/questions/49631/is-there-a-way-to-set-shortcut-keys-for-specific-opened-windows-in-gnome
+
+如何wmctrl使用窗口id激活窗口？
+wmctrl -i -a $id # -ia 正确 -ai 错误 
+man wmctrl /Interpret window arguments
+
+Block_Comments

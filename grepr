@@ -1,0 +1,62 @@
+#!/usr/bin/env bash
+
+pattern=""
+find_type="-type f"
+find_postfix="" # 指定文件后缀
+dir="."
+
+for ((i=1; i<= "${#}"; i++))
+do
+	if [ "${!i}" == "-dd" ] # dir 指定目录
+	then
+		i=$((i+1))
+		dir="${!i}"
+	elif [ "${!i}" == "-pp" ] # postfix 指定文件后缀
+	then
+		i=$((i+1))
+		find_postfix="-name \"*.${!i}\""
+	else
+		pattern="${pattern}(?=.*${!i})";
+	fi
+done
+
+cmd="grep -n --color=auto -P \"${pattern}\" -r \"${dir}\" | nl"
+
+: <<'Block_Comments'
+如何find文件按照访问时间排序？
+鸟哥的Linux私房菜 基础学习篇 3ed 191 man /-atime
+https://www.google.com/search?q=find+sort+by+access+time&ie=utf-8&oe=utf-8 https://unix.stackexchange.com/questions/29899/how-can-i-use-find-and-sort-the-results-by-mtime https://superuser.com/questions/416308/how-to-list-files-recursively-and-sort-them-by-modification-time
+-printf选项或stat命令
+Block_Comments
+cmd="find \"${dir}\" ${find_type} ${find_postfix} -exec grep -n --with-filename --color=auto -P \"${pattern}\" {} \; | nl"
+eval "${cmd}"
+
+: <<'Block_Comments'
+如何使用下标变量获取bash输入参数？
+Linux命令行与Shell脚本编程大全 2ed 276 "${!i}"
+Block_Comments
+
+# Linux命令行与Shell脚本编程大全 2ed 225 if
+# -r -R会检索链接（包括目录） https://www.google.com/search?q=grep+dir
+# --color=auto ref type grep
+# -n ref man grep
+# 如何find检索后执行命令？ -exec command ; ref man find /-exec command ;
+# 如何find检索一般文件类型？ -type f ref man find /-type c
+
+: <<'Block_Comments'
+** CANCELLED 如何grep修改分隔符？ 如何grep使用制表符\t分隔检索内容？
+   CLOSED: [2017-06-09 Fri 18:54]
+   - State "CANCELLED"  from ""           [2017-06-09 Fri 18:54] \\
+	 no method
+No, there is no standard option http://www.unix.com/unix-for-dummies-questions-and-answers/68463-change-field-separator-grep-space.html
+Block_Comments
+
+: <<'Block_Comments'
+如何grep显示被检索的文件？ -r https://stackoverflow.com/questions/13875380/how-to-show-grep-result-with-complete-path-or-file-name https://www.google.com/search?q=grep+show+file+path&ie=utf-8&oe=utf-8
+--with-filename -H man grep /-H
+Block_Comments
+
+: <<'Block_Comments'
+如何bash使用批注释或批量注释或块注释？
+https://www.gnu.org/software/bash/manual/bash.html#Here-Documents https://unix.stackexchange.com/questions/37411/multiline-shell-script-comments-how-does-this-work https://www.google.com/search?q=bash+comment&ie=utf-8&oe=utf-8
+Block_Comments

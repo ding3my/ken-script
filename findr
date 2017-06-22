@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+dir="."
+pattern=""
+
+for ((i=1; i<="${#}"; i++))
+do
+	if [ "${i}" == "-dd" ]
+	then
+		i=$((i+1))
+		dir="${i}"
+	else
+		pattern="${pattern}(?=.*${!i})"
+	fi
+done
+
+cmd="find \"${dir}\" |grep -P \"${pattern}\""
+eval "${cmd}"
