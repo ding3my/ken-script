@@ -1,0 +1,19 @@
+* Introduce
+Path tool for making code about bash command "export".
+* Requirement
+** Tutorial
+E.g.
+#+BEGIN_SRC  
+patht "$path"
+#+END_SRC
+** Manual
+** FAQ
+* Development
+** 如何转换相对路径.为绝对路径？
+https://www.google.com/search?q=how+to+convert+dot+to+path&ie=utf-8&oe=utf-8
+https://stackoverflow.com/questions/6643853/how-to-convert-in-path-names-to-absolute-name-in-a-bash-script
+#+BEGIN_SRC  
+absolute_path=$(readlink -m "$relative_path")
+#+END_SRC
+* Maintenance
+  None

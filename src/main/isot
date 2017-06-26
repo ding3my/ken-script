@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+if [ "${1}" == "" ]; then
+	cat<<'EOF' # 单引号表示不使用命令替换 https://www.gnu.org/software/bash/manual/bash.html#Command-Substitution
+dd if="$iso" of="$disk"
+EOF
+fi

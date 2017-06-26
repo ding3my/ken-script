@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+if [ "${1}" == "bash" ]; then
+	if [ "${2}" != "" ]; then
+		mkdir "${2}"/src/main -p;
+		mkdir "${2}"/src/test -p;
+		touch "${2}"/README.org
+	else
+		echo "project name is empty"
+	fi
+else
+	echo "command error"
+fi

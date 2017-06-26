@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+IFS=$'\n' # https://www.gnu.org/software/bash/manual/bash.html#Word-Splitting
+
+if [ "${1}" == "" ]; then
+	for i in $(find "$(pwd)" -type d)
+	do
+		printf "export PATH=\"\$PATH:${i}\"\n"
+	done
+elif [ "${1}" != "" ]; then
+	absolute_path="$(readlink -m "${1}")"
+	for i in $(find "${absolute_path}" -type d)
+	do
+		printf "export PATH=\"\$PATH:${i}\"\n"
+	done
+fi
