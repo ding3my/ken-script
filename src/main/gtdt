@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+
+gtd_dir_name=gtd
+if [ "${1}" == "init" ]; then
+	if [ "${2}" == "" ]; then # 如果参数2为空，则默认目录名为gtd
+		mkdir -p "${gtd_dir_name}"
+		mkdir -p "${gtd_dir_name}/stf"
+		mkdir -p "${gtd_dir_name}/nonstf"
+		mkdir -p "${gtd_dir_name}/nonstf/act"
+		mkdir -p "${gtd_dir_name}/nonstf/act/proj"
+		mkdir -p "${gtd_dir_name}/nonstf/act/nonproj"
+		mkdir -p "${gtd_dir_name}/nonstf/nonact"
+		mkdir -p "${gtd_dir_name}/nonstf/nonact/maybe"
+		mkdir -p "${gtd_dir_name}/nonstf/nonact/ref"
+
+		touch "${gtd_dir_name}/stf/stf.org"
+		touch "${gtd_dir_name}/nonstf/act/proj/proj.org"
+		touch "${gtd_dir_name}/nonstf/act/nonproj/nonproj.org"
+		touch "${gtd_dir_name}/nonstf/nonact/maybe/maybe.org"
+		touch "${gtd_dir_name}/nonstf/nonact/ref/ref.org"
+	elif [ "${2}" != "" ]; then
+		gtd_dir_name="${2}"
+		mkdir -p "${gtd_dir_name}"
+		mkdir -p "${gtd_dir_name}/stf"
+		mkdir -p "${gtd_dir_name}/nonstf"
+		mkdir -p "${gtd_dir_name}/nonstf/act"
+		mkdir -p "${gtd_dir_name}/nonstf/act/proj"
+		mkdir -p "${gtd_dir_name}/nonstf/act/nonproj"
+		mkdir -p "${gtd_dir_name}/nonstf/nonact"
+		mkdir -p "${gtd_dir_name}/nonstf/nonact/maybe"
+		mkdir -p "${gtd_dir_name}/nonstf/nonact/ref"
+
+		touch "${gtd_dir_name}/stf/stf.org"
+		touch "${gtd_dir_name}/nonstf/act/proj/proj.org"
+		touch "${gtd_dir_name}/nonstf/act/nonproj/nonproj.org"
+		touch "${gtd_dir_name}/nonstf/nonact/maybe/maybe.org"
+		touch "${gtd_dir_name}/nonstf/nonact/ref/ref.org"
+	fi
+fi

@@ -1,0 +1,113 @@
+* Intro
+个人常用bash脚本。
+* Use
+** dnft
+？
+** findt
+？多关键字检索文件名（用于检索文档名，一般为文件名）
+#+BEGIN_SRC  
+findr $keyword1 $keyword2 $keywordn
+
+findr $keyword1 $keyword2 $keywordn -dd $dir # 指定目录
+#+END_SRC
+** DONE gitt
+   CLOSED: [2017-07-13 Thu 14:14]
+？用于快速git push，发布ken_blog和ken_script。
+** DONE gnomet
+   CLOSED: [2017-07-13 Thu 13:07]
+用于gnome中，M-F2快速加载gnome network，切换pac文件（gfw、all）。
+#+BEGIN_SRC  
+gnomet net # 加载gnome network
+#+END_SRC
+** grept
+多关键字检索文件内容（用于检索文档内容）
+#+BEGIN_SRC  
+grepr $keyword1 $keyword2 $keywordn
+
+grepr $keyword1 $keyword2 $keywordn -dd $dir -pp $postfix # 指定目录和检索文件后缀（例如避免检索pdf文件，耗时过长）
+#+END_SRC
+** gtdt
+？创建gtd相关目录，在新环境快速部署gtd系统。
+** DONE kentest
+   CLOSED: [2017-07-13 Thu 14:16]
+？用于测试ken_script配置，启动gnome计算器。
+** isot
+？制作windows、linux启动盘。
+** launchert
+？
+** patht
+？生成bash的export语句，用于快速部署ken_script。
+** projt
+？快速创建bash等项目目录，类似eclipse ide中的创建项目。
+** DONE pingt
+   CLOSED: [2017-07-13 Thu 12:31]
+批量测试ip或域名速度（用于测试ss服务器）
+#+BEGIN_SRC  
+sst url | pingt test
+#+END_SRC
+** DONE sst
+   CLOSED: [2017-07-13 Thu 12:31]
+批量生成ss连接脚本（用于快速切换ss服务器）
+#+BEGIN_SRC  
+sst init $port $pass <<EOF
+$ip1
+$ip2
+$ipn
+EOF
+#+END_SRC
+
+** shortcutt
+？模拟实现windows中的Win-r和Path的快速加载。
+** DONE xct
+   CLOSED: [2017-07-13 Thu 13:28]
+？通过管道命令复制输出到x的剪切板。
+#+BEGIN_SRC  
+echo hi | xct
+#+END_SRC
+* Op
+* Test
+* Dev
+** Ref
+*** DONE 什么是realpath -m含义？
+	 CLOSED: [2017-07-13 Thu 11:40]
+？使得findr输出绝对路径，快速使用emacs编辑文件。
+
+- https://www.google.com/search?q=--canonicalize-missing+mean&ie=utf-8&oe=utf-8
+- https://unix.stackexchange.com/questions/202855/explain-the-options-of-readlink-command
+#+BEGIN_VERSE
+-m option is the opposite of -e. No test will be made to check if the components of path exist
+#+END_VERSE
+#+BEGIN_SRC  
+$ readlink -m ./subdir/link/fakedir/fakefile
+/tmp/realdir/fakedir/fakefile
+
+$ ln -s /nonexistent /tmp/subdir/brokenlink
+
+$ readlink -m ./subdir/brokenlink/foobar
+/nonexistent/foobar
+#+END_SRC
+*** DONE 如何linux bash转换相对路径.为绝对路径？
+	 CLOSED: [2017-07-13 Thu 11:35]
+？使得findr输出绝对路径，快速使用emacs编辑文件。
+
+- https://www.google.com/search?q=convert+relative+path+to+absolute+bash&ie=utf-8&oe=utf-8
+- https://stackoverflow.com/questions/6643853/how-to-convert-in-path-names-to-absolute-name-in-a-bash-script
+#+BEGIN_VERSE
+readlink -m $relative_path
+#+END_VERSE
+
+*** DONE 如何linux nohup不输出nohup.out？
+	 CLOSED: [2017-07-13 Thu 11:45]
+？避免污染git repo。
+
+- https://www.google.com/search?q=nohup&ie=utf-8&oe=utf-8
+- http://www.cnblogs.com/allenblogs/archive/2011/05/19/2051136.html
+#+BEGIN_SRC  
+nohup $command > $out_file &
+
+# 测试
+nohup ls > /dev/null &
+#+END_SRC
+
+* Design
+* Log

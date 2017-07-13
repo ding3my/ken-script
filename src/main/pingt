@@ -1,0 +1,59 @@
+#!/usr/bin/env bash
+: <<'Block_Comments'
+ping数据格式
+64 bytes from 103.192.224.12.static.xtom.io (103.192.224.12): icmp_seq=5 ttl=47 time=95.5 ms
+
+# 获取ip和time
+sed -E "s/.*\((.+)\).*time=([^ ]+).*/\1\t\2/g"
+
+cat ~/.pingt/result.txt | grep "^64 " | sed -E "s/.*\((.+)\).*time=([^ ]+).*/\1\t\2/g" | awk 'BEGIN {FS="\t"}{s[$1] += $2}END{ for(i in s){  print i, s[i] } }'
+
+cat ~/.pingt/result.txt | grep "^64 " | sed -E "s/.*\((.+)\).*time=([^ ]+).*/\1\t\2/g" | awk 'BEGIN {FS="\t"}{s[$1] += $2}END{ for(i in s){  print i, s[i]/NR } }'
+
+cat ~/.pingt/result.txt | grep "^64 " | sed -E "s/.*\((.+)\).*time=([^ ]+).*/\1\t\2/g" | awk 'BEGIN {FS="\t"}{s[$1] += $2}END{ for(i in s){  print i, s[i]/NR } }' | sort -k 2 -n -r
+# 问题在分组应该统计各自的数量。
+
+cat ~/.pingt/result.txt | grep "^64 " | sed -E "s/.*\((.+)\).*time=([^ ]+).*/\1\t\2/g" | awk 'BEGIN {FS="\t"}{s[$1] += $2; count[$1] ++}END{ for(i in s){  print i, s[i]/count[i] } }' | sort -k 2 -n -r
+
+
+# 让ping输出domain
+domain=jp01-22.ssv7.net; ping $domain  | sed -E "s/(.*\()(.*)(\).*)/\1${domain}\3/g"
+
+为什么result没有数据？
+阻塞了，在缓存里。
+使用 ping -c $num 解决
+
+Block_Comments
+
+dir="$HOME/.pingt"
+result="${dir}/result.txt"
+
+sleep_time=10
+ping_times="${sleep_time}"
+
+mkdir -p "${dir}"
+printf "" > "${result}"
+
+if [ "test" == "${1}" ]; then
+
+	# stdin读取ip
+	mapfile -t ips </dev/stdin
+
+	while true 
+	do
+		for i in "${ips[@]}"
+		do
+			domain="${i}"
+			# printf "${domain}\n"
+			( ping "${domain}" -c "${ping_times}" | sed --regexp-extended "s/(.*\()(.*)(\).*)/\1${domain}\3/g" >> "${result}" ) &
+
+			# ping "${i}" >> "${result}" &
+		done
+
+		sleep "${sleep_time}";
+		clear
+		cat ~/.pingt/result.txt | grep "^64 " | sed --regexp-extended "s/.*\((.+)\).*time=([^ ]+).*/\1\t\2/g" | awk 'BEGIN {FS="\t"}{s[$1] += $2; count[$1] ++}END{ for(i in s){  print i, s[i]/count[i] } }' | sort --key=2 --numeric-sort --reverse
+
+	done
+
+fi

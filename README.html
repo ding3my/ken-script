@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>README</title>
+<!-- 2017-07-13 Thu 12:25 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="generator" content="Org-mode" />
+<meta  name="author" content="Ken Young" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  pre.src-sh:before    { content: 'sh'; }
+  pre.src-bash:before  { content: 'sh'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-R:before     { content: 'R'; }
+  pre.src-perl:before  { content: 'Perl'; }
+  pre.src-java:before  { content: 'Java'; }
+  pre.src-sql:before   { content: 'SQL'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.right  { text-align: center;  }
+  th.left   { text-align: center;   }
+  th.center { text-align: center; }
+  td.right  { text-align: right;  }
+  td.left   { text-align: left;   }
+  td.center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara:nth-child(2) { display: inline; }
+  .footpara { display: block; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">README</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1. Intro</a></li>
+<li><a href="#sec-2">2. Use</a>
+<ul>
+<li><a href="#sec-2-1">2.1. findr</a></li>
+<li><a href="#sec-2-2">2.2. grepr</a></li>
+<li><a href="#sec-2-3">2.3. pingt</a></li>
+<li><a href="#sec-2-4">2.4. sst</a></li>
+</ul>
+</li>
+<li><a href="#sec-3">3. Op</a></li>
+<li><a href="#sec-4">4. Test</a></li>
+<li><a href="#sec-5">5. Dev</a>
+<ul>
+<li><a href="#sec-5-1">5.1. Ref</a>
+<ul>
+<li><a href="#sec-5-1-1">5.1.1. <span class="done DONE">DONE</span> 什么是realpath -m含义？</a></li>
+<li><a href="#sec-5-1-2">5.1.2. <span class="done DONE">DONE</span> 如何linux bash转换相对路径.为绝对路径？</a></li>
+<li><a href="#sec-5-1-3">5.1.3. <span class="done DONE">DONE</span> 如何linux nohup不输出nohup.out？</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#sec-6">6. Design</a></li>
+<li><a href="#sec-7">7. Log</a></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Intro</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+个人常用bash脚本。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> Use</h2>
+<div class="outline-text-2" id="text-2">
+</div><div id="outline-container-sec-2-1" class="outline-3">
+<h3 id="sec-2-1"><span class="section-number-3">2.1</span> findr</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+多关键字检索文件名（用于检索文档名，一般为文件名）
+</p>
+<pre class="example">
+findr $keyword1 $keyword2 $keywordn
+
+findr -dd $dir $keyword1 $keyword2 $keywordn # 指定目录
+</pre>
+</div>
+</div>
+<div id="outline-container-sec-2-2" class="outline-3">
+<h3 id="sec-2-2"><span class="section-number-3">2.2</span> grepr</h3>
+<div class="outline-text-3" id="text-2-2">
+<p>
+多关键字检索文件内容（用于检索文档内容）
+</p>
+<pre class="example">
+</pre>
+</div>
+</div>
+<div id="outline-container-sec-2-3" class="outline-3">
+<h3 id="sec-2-3"><span class="section-number-3">2.3</span> pingt</h3>
+<div class="outline-text-3" id="text-2-3">
+<p>
+批量测试ip或域名速度（用于测试ss服务器）
+</p>
+<pre class="example">
+sst url | pingt test
+</pre>
+</div>
+</div>
+<div id="outline-container-sec-2-4" class="outline-3">
+<h3 id="sec-2-4"><span class="section-number-3">2.4</span> sst</h3>
+<div class="outline-text-3" id="text-2-4">
+<p>
+批量生成ss连接脚本（用于快速切换ss服务器）
+</p>
+<pre class="example">
+sst init $port $pass &lt;&lt;EOF
+$ip1
+$ip2
+$etc
+EOF
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> Op</h2>
+</div>
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> Test</h2>
+</div>
+<div id="outline-container-sec-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> Dev</h2>
+<div class="outline-text-2" id="text-5">
+</div><div id="outline-container-sec-5-1" class="outline-3">
+<h3 id="sec-5-1"><span class="section-number-3">5.1</span> Ref</h3>
+<div class="outline-text-3" id="text-5-1">
+</div><div id="outline-container-sec-5-1-1" class="outline-4">
+<h4 id="sec-5-1-1"><span class="section-number-4">5.1.1</span> <span class="done DONE">DONE</span> 什么是realpath -m含义？</h4>
+<div class="outline-text-4" id="text-5-1-1">
+<p>
+？使得findr输出绝对路径，快速使用emacs编辑文件。
+</p>
+
+<ul class="org-ul">
+<li><a href="https://www.google.com/search?q=--canonicalize-missing+mean&ie=utf-8&oe=utf-8">https://www.google.com/search?q=--canonicalize-missing+mean&ie=utf-8&oe=utf-8</a>
+</li>
+<li><a href="https://unix.stackexchange.com/questions/202855/explain-the-options-of-readlink-command">https://unix.stackexchange.com/questions/202855/explain-the-options-of-readlink-command</a>
+</li>
+</ul>
+<p class="verse">
+-m option is the opposite of -e. No test will be made to check if the components of path exist<br  />
+</p>
+<pre class="example">
+$ readlink -m ./subdir/link/fakedir/fakefile
+/tmp/realdir/fakedir/fakefile
+
+$ ln -s /nonexistent /tmp/subdir/brokenlink
+
+$ readlink -m ./subdir/brokenlink/foobar
+/nonexistent/foobar
+</pre>
+</div>
+</div>
+<div id="outline-container-sec-5-1-2" class="outline-4">
+<h4 id="sec-5-1-2"><span class="section-number-4">5.1.2</span> <span class="done DONE">DONE</span> 如何linux bash转换相对路径.为绝对路径？</h4>
+<div class="outline-text-4" id="text-5-1-2">
+<p>
+？使得findr输出绝对路径，快速使用emacs编辑文件。
+</p>
+
+<ul class="org-ul">
+<li><a href="https://www.google.com/search?q=convert+relative+path+to+absolute+bash&ie=utf-8&oe=utf-8">https://www.google.com/search?q=convert+relative+path+to+absolute+bash&ie=utf-8&oe=utf-8</a>
+</li>
+<li><a href="https://stackoverflow.com/questions/6643853/how-to-convert-in-path-names-to-absolute-name-in-a-bash-script">https://stackoverflow.com/questions/6643853/how-to-convert-in-path-names-to-absolute-name-in-a-bash-script</a>
+</li>
+</ul>
+<p class="verse">
+readlink -m $relative<sub>path</sub><br  />
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-5-1-3" class="outline-4">
+<h4 id="sec-5-1-3"><span class="section-number-4">5.1.3</span> <span class="done DONE">DONE</span> 如何linux nohup不输出nohup.out？</h4>
+<div class="outline-text-4" id="text-5-1-3">
+<p>
+？避免污染git repo。
+</p>
+
+<ul class="org-ul">
+<li><a href="https://www.google.com/search?q=nohup&ie=utf-8&oe=utf-8">https://www.google.com/search?q=nohup&ie=utf-8&oe=utf-8</a>
+</li>
+<li><a href="http://www.cnblogs.com/allenblogs/archive/2011/05/19/2051136.html">http://www.cnblogs.com/allenblogs/archive/2011/05/19/2051136.html</a>
+</li>
+</ul>
+<pre class="example">
+nohup $command &gt; $out_file &amp;
+
+# 测试
+nohup ls &gt; /dev/null &amp;
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-6" class="outline-2">
+<h2 id="sec-6"><span class="section-number-2">6</span> Design</h2>
+</div>
+<div id="outline-container-sec-7" class="outline-2">
+<h2 id="sec-7"><span class="section-number-2">7</span> Log</h2>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: Ken Young</p>
+<p class="date">Created: 2017-07-13 Thu 12:25</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 25.1.1 (<a href="http://orgmode.org">Org</a> mode 8.2.10)</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

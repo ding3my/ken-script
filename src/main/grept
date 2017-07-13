@@ -20,7 +20,7 @@ do
 	fi
 done
 
-cmd="grep -n --color=auto -P \"${pattern}\" -r \"${dir}\" | nl"
+cmd="grep --line-number --color=auto --perl-regexp \"${pattern}\" --recursive \"${dir}\" | nl"
 
 : <<'Block_Comments'
 如何find文件按照访问时间排序？

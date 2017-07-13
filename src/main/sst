@@ -2,27 +2,29 @@
 # ？用于批量生成ss快捷脚本，解决ss服务器切换效率问题。
 
 # 创建配置目录。？用于存放ss脚本
-dir="$HOME/.ss"
+dir="$HOME/.sst"
 mkdir "${dir}" -p
 
-ip=""
-port="$1"
-pass="$2"
 
 
-if [ "${1}" == "speed" ]; then
+if [ "url" == "${1}" ]; then
 	# 获取所有待测试的ip或域名。？用于解析
 	grep -P '\-s .* \-p' -r "${dir}" | sed -E "s/.*-s (.*) -p.*/\1/g"
-else
+elif [ "init" == "$1" ]; then
+	ip=""
+	port="$2"
+	pass="$3"
+
 	# 读取标准输入的内容
 	readarray -t input </dev/stdin
 
 	for i in ${input[*]}
 	do
 		ip="${i}"
-		cmd="sudo killall sslocal ; nohup sslocal -s "${ip}" -p "${port}" -k "${pass}" -qq &"
+		cmd="sudo killall sslocal ; nohup sslocal -s "${ip}" -p "${port}" -k "${pass}" -qq & > /dev/null"
+		#cmd="sudo killall sslocal ; nohup sslocal -s \"${ip}\" -p \"${port}\" -k \"${pass}\" -qq &"
 		echo "${cmd}"
-		ssfile="${dir}/sss${ip}"
+		ssfile="${dir}/sst${ip}"
 		cat<<EOF>${ssfile} # 必须EOF不能缩进
 #!/usr/bin/env bash
 ${cmd}

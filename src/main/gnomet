@@ -6,14 +6,12 @@ https://www.google.com/search?biw=1920&bih=846&q=gnome+gsettings+schema+path+key
 gsettings list-schemas
 Block_Comments
 
-if [ "$1" == "net" ]
-then
-	nohup gnome-control-center network &
-elif [ "$1" == "key" ]
-then
-	nohup gnome-control-center keyboard &
-else
-	nohup gnome-control-center &
+if [ "net" == "$1" ]; then
+	nohup gnome-control-center network & > /dev/null
+elif [ "key" == "$1" ]; then
+	nohup gnome-control-center keyboard & > /dev/null
+elif [ "" == "$1" ]; then
+	nohup gnome-control-center & > /dev/null
 fi
 
 # nohup

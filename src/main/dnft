@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
-if [ "${1}" == "r" ]; then
-	if [ "${2}" == "" ]; then
+if [ "r" == "${1}" ]; then
+	if [ "" == "${2}" ]; then
 		dnf list
-	elif [ "${2}" != "" ]; then
+	elif [ "" != "${2}" ]; then
 		dnf list | grep "${2}"
 	fi
 fi
