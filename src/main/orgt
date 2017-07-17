@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+this_file="$(readlink --canonicalize-missing "${BASH_SOURCE[0]}")"
+this_file_name="$(basename "${this_file}")"
+this_dir="$(dirname "${this_file}")"
+
+
+arg_num="${#}"
+if [ "${arg_num}" -gt 0 ]; then # orgt $dir
+	for org_dir in ${@}; do
+		cmd="find \"${org_dir}\" -name \"*.html\" | xargs --replace={} rm \"{}\"" # 删除旧的html
+		eval "${cmd}"
+
+		cmd="find \"${org_dir}\" -name \"*.org\" | xargs --replace={} emacs \"{}\" --batch -f org-html-export-to-html --kill"
+		eval "${cmd}"
+	done
+else
+	cat "${this_file}"
+	printf "\n${this_file}\n"
+fi
