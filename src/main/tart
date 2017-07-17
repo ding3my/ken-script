@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+file_path=""
+postfix=""
+cmd="tar"
+
+if [ "gz" == "${postfix}" ]; then
+	cmd="tar --extract --file \"${file_path}\" --verbose"
+	echo "${cmd}"
+elif [ "gz" == "${postfix}" ]; then
+	cmd="tar --extract --file \"${file_path}\" --verbose"
+	echo "${cmd}"
+fi

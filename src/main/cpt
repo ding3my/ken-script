@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+this_file="$(readlink --canonicalize-missing "${BASH_SOURCE[0]}")"
+this_file_name="$(basename "${this_file}")"
+this_dir="$(dirname "${this_file}")"
+
+arg_num="${#}"
+
+if [ "${arg_num}" == 2 ]; then
+	src_file="${1}"
+	dest_file="${2}"
+	if [ -f "${src_file}" ]; then
+		mkdir -p "${dest_file}" # 创建目录，复制文件到该目录
+		cp "${src_file}" "${dest_file}"
+	elif [ -d "${src_file}" ]; then
+		mkdir -p "${dest_file}"
+		cp "${src_file}" "${dest_file}" -r
+	fi
+else
+	cat "${this_file}"
+fi

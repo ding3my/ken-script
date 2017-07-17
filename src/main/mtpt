@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+this_file="$(readlink --canonicalize-missing "${BASH_SOURCE[0]}")"
+this_file_name="$(basename "${this_file}")"
+this_dir="$(dirname "${this_file}")"
+
+arg_num="${#}"
+
+if [ "${arg_num}" == 1 ]; then # 默认挂载第一个mtp设备到目录，例如mtpt $dir
+	mnt_dir="${1}"
+	mkdir -p "${mnt_dir}" # 创建目录，避免目录不存在。
+	fusermount -u "${mnt_dir}" 2>/dev/null # 卸载目录，避免目录被挂载。
+	simple-mtpfs --device 1 "${mnt_dir}"
+	# 如果
+elif [ "${arg_num}" -gt 1 ]; then
+	op_code="${1}"
+	if [ "${op_code}" == "umount" ]; then # 卸载安卓设备，例如mtpt umount $dir
+		mnt_dir="${2}"
+		fusermount -u "${mnt_dir}" # 卸载目录，避免目录被挂载。
+	fi
+else
+	cat "${this_file}"
+	printf "\n${this_file}\n"
+fi

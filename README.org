@@ -35,6 +35,9 @@ grepr $keyword1 $keyword2 $keywordn -dd $dir -pp $postfix # 指定目录和检�
 ？制作windows、linux启动盘。
 ** launchert
 ？
+** DONE mvt
+   CLOSED: [2017-07-13 Thu 15:02]
+？模拟windows回收站，解决rm删除无法恢复。
 ** patht
 ？生成bash的export语句，用于快速部署ken_script。
 ** projt
@@ -58,6 +61,8 @@ EOF
 
 ** shortcutt
 ？模拟实现windows中的Win-r和Path的快速加载。
+** tart
+？解压文件夹，不用考虑后缀。（安装emacs color-theme插件）
 ** DONE xct
    CLOSED: [2017-07-13 Thu 13:28]
 ？通过管道命令复制输出到x的剪切板。
@@ -68,6 +73,15 @@ echo hi | xct
 * Test
 * Dev
 ** Ref
+*** DONE 如何tar解压文件？
+	 CLOSED: [2017-07-13 Thu 18:07]
+？安装emacs color-theme插件
+
+- man tar
+- ref 鸟哥的Linux私房菜 基础学习篇 3ed p254
+#+BEGIN_VERSE
+tar --extract --verbose --file $file
+#+END_VERSE
 *** DONE 什么是realpath -m含义？
 	 CLOSED: [2017-07-13 Thu 11:40]
 ？使得findr输出绝对路径，快速使用emacs编辑文件。
