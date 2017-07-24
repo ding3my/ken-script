@@ -4,6 +4,7 @@ file_path=""
 postfix=""
 cmd="tar"
 
+# 未完成
 if [ "gz" == "${postfix}" ]; then
 	cmd="tar --extract --file \"${file_path}\" --verbose"
 	echo "${cmd}"

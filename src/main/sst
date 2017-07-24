@@ -1,6 +1,12 @@
 #!/usr/bin/env bash
 # ？用于批量生成ss快捷脚本，解决ss服务器切换效率问题。
 
+this_file="$(readlink --canonicalize-missing "${BASH_SOURCE[0]}")"
+this_file_name="$(basename "${this_file}")"
+this_dir="$(dirname "${this_file}")"
+
+
+
 # 创建配置目录。？用于存放ss脚本
 dir="$HOME/.sst"
 mkdir "${dir}" -p
@@ -31,6 +37,9 @@ ${cmd}
 EOF
 		chmod +x "${ssfile}"
 	done
+else
+	cat "${this_file}"
+	echo "${this_file}"
 fi
 
 

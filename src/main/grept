@@ -1,26 +1,35 @@
 #!/usr/bin/env bash
+this_file="$(readlink --canonicalize-missing "${BASH_SOURCE[0]}")"
+this_file_name="$(basename "${this_file}")"
+this_dir="$(dirname "${this_file}")"
 
-pattern=""
-find_type="-type f"
-find_postfix="" # 指定文件后缀
-dir="."
+arg_num="${#}"
+if [ "${arg_num}" -gt 0 ]; then
+	pattern=""
+	find_type="-type f"
+	find_postfix="org" # 指定文件后缀，默认为org
+	dir="."
 
-for ((i=1; i<= "${#}"; i++))
-do
-	if [ "${!i}" == "-dd" ] # dir 指定目录
-	then
-		i=$((i+1))
-		dir="${!i}"
-	elif [ "${!i}" == "-pp" ] # postfix 指定文件后缀
-	then
-		i=$((i+1))
-		find_postfix="-name \"*.${!i}\""
-	else
-		pattern="${pattern}(?=.*${!i})";
-	fi
-done
+	for ((i=1; i<= "${#}"; i++))
+	do
+		if [ "${!i}" == "-d" ] # dir 指定目录
+		then
+			i=$((i+1))
+			dir="${!i}"
+		elif [ "${!i}" == "-p" ] # postfix 指定文件后缀
+		then
+			i=$((i+1))
+			find_postfix="-name \"*.${!i}\""
+		else
+			pattern="${pattern}(?=.*${!i})";
+		fi
+	done
 
-cmd="grep --line-number --color=auto --perl-regexp \"${pattern}\" --recursive \"${dir}\" | nl"
+	cmd="grep --line-number --color=auto --perl-regexp \"${pattern}\" --recursive \"${dir}\" | nl"
+elif [ "${arg_num}" -eq 0 ]; then
+	cat "${this_file}"
+	echo "${this_file}"
+fi
 
 : <<'Block_Comments'
 如何find文件按照访问时间排序？

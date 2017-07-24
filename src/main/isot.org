@@ -1,8 +1,0 @@
-* Introduce
-isot(iso tool) for making a usb drive to install OS.
-* Requirement
-  None
-* Development
-  None
-* Maintenance
-  None

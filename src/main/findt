@@ -1,18 +1,27 @@
 #!/usr/bin/env bash
+this_file="$(readlink --canonicalize-missing "${BASH_SOURCE[0]}")"
+this_file_name="$(basename "${this_file}")"
+this_dir="$(dirname "${this_file}")"
 
-dir="$(realpath -m .)"
-pattern=""
+arg_num="${#}"
+if [ "${arg_num}" -gt 0 ]; then
+	dir="$(realpath -m .)"
+	pattern=""
 
-for ((i=1; i<="${#}"; i++))
-do
-	if [ "${i}" == "-dd" ]
-	then
-		i=$((i+1))
-		dir="${i}"
-	else
-		pattern="${pattern}(?=.*${!i})"
-	fi
-done
+	for ((i=1; i<="${#}"; i++))
+	do
+		if [ "${i}" == "-dd" ]
+		then
+			i=$((i+1))
+			dir="${i}"
+		else
+			pattern="${pattern}(?=.*${!i})"
+		fi
+	done
 
-cmd="find \"${dir}\" | grep -P \"${pattern}\" | sed -E 's|(.*)|\"\1\"|g'"
-eval "${cmd}"
+	cmd="find \"${dir}\" | grep -P \"${pattern}\" | sed -E 's|(.*)|\"\1\"|g'"
+	eval "${cmd}"
+elif [ "${arg_num}" == 0 ]; then
+	cat "${this_file}"
+	echo "${this_file}"
+fi

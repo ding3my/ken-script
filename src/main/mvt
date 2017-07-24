@@ -4,12 +4,17 @@ date_dir_name=`date +%F_%T`
 config_dir="$HOME/.$(basename "${this_path}")"
 date_dir="${config_dir}/${date_dir_name}"
 
-cmd="mkdir \"${date_dir}\" -p"
-#echo "${cmd}"
-eval "${cmd}"
 
-for i in "${@}"; do
-	cmd="mv -t \"${date_dir}\" \"${i}\""
-	#echo "${cmd}"
+arg_num="${#}"
+if [ "${arg_num}" == 0 ]; then
+	cat "${this_path}"
+	echo "${this_path}"
+elif [ "${arg_num}" -gt 0 ]; then
+	cmd="mkdir \"${date_dir}\" -p"
 	eval "${cmd}"
-done
+
+	for i in "${@}"; do
+		cmd="mv -t \"${date_dir}\" \"${i}\""
+		eval "${cmd}"
+	done
+fi
